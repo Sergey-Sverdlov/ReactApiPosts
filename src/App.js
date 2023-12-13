@@ -11,15 +11,10 @@ import MySelect from "./components/UI/Select/MySelect";
 import PostFilter from "./components/PostFilter";
 import MyModel from "./components/UI/MyModel/MyModel";
 import {usePosts} from "./components/hooks/usePosts";
+import axios from "axios";
 
 const App = () => {
-    const [posts, setPosts] = React.useState([
-        {id: 1, title: 'JavaScript', body: 'b'},
-        {id: 2, title: 'f', body: 'a'},
-        {id: 3, title: 'c', body: 't'},
-        {id: 4, title: 'v', body: 'h'},
-        {id: 5, title: 'a', body: 'caa'},
-    ])
+    const [posts, setPosts] = React.useState([])
 
 
     const [filter, setFilter] = useState({
@@ -35,12 +30,17 @@ const App = () => {
         setModel(false)
     }
 
+    async function fetchPosts() {
+        const response = await axios.get('https://jsonplaceholder.typicode.com/posts')
+        setPosts(response.data)
+    }
     const removePost = (post) => {
         setPosts(posts.filter(p => p.id !== post.id))
     }
 
     return (
         <div className="App">
+            <button onClick={fetchPosts}>Получить список постов</button>
             <MyButton style={{marginTop: '30px'}} onClick={() => {
                 setModel(true)
             }}>
