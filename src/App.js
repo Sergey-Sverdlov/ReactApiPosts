@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import Counter from "./components/Counter";
 import ClassCounter from "./components/ClassCounter";
 import "./styles/App.css"
@@ -25,13 +25,16 @@ const App = () => {
     const [model, setModel] = useState(false)
     const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query)
 
+    useEffect(()=>{
+        fetchPosts()
+    }, [])
+
     const createPost = (newPost) => {
         setPosts([...posts, newPost])
         setModel(false)
     }
-
     async function fetchPosts() {
-        const response = await axios.get('https://jsonplaceholder.typicode.com/posts')
+
         setPosts(response.data)
     }
     const removePost = (post) => {
