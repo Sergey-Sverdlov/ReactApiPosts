@@ -12,6 +12,9 @@ import PostFilter from "./components/PostFilter";
 import MyModel from "./components/UI/MyModel/MyModel";
 import {usePosts} from "./components/hooks/usePosts";
 import axios from "axios";
+import PostService from "./components/API/PostService";
+import Loader from "./components/Loader/Loader";
+import {useFetching} from "./components/hooks/useFetching";
 
 const App = () => {
     const [posts, setPosts] = React.useState([])
@@ -24,8 +27,13 @@ const App = () => {
 
     const [model, setModel] = useState(false)
     const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query)
+    const [fetchPosts, isPostsLoading, postError] = useFetching(async () => {
+        const posts = await PostService.getAll();
+        setPosts(posts)
+    })
 
-    useEffect(()=>{
+    useEffect(() => {
+        console.log("HERE3")
         fetchPosts()
     }, [])
 
@@ -33,10 +41,8 @@ const App = () => {
         setPosts([...posts, newPost])
         setModel(false)
     }
-    async function fetchPosts() {
 
-        setPosts(response.data)
-    }
+
     const removePost = (post) => {
         setPosts(posts.filter(p => p.id !== post.id))
     }
@@ -54,7 +60,11 @@ const App = () => {
             </MyModel>
             <hr style={{margin: "15px"}}/>
             <PostFilter filter={filter} setFilter={setFilter}/>
-            <PostList remove={removePost} posts={sortedAndSearchedPosts} title={"Посты про JS"}/>
+            {isPostsLoading ?
+                <div style={{display: "flex", justifyContent: 'center', marginTop: '50px', alignItems: 'center'}}>
+                    <Loader/>
+                </div> :
+                <PostList remove={removePost} posts={sortedAndSearchedPosts} title={"Посты про JS"}/>}
         </div>
     )
 }
