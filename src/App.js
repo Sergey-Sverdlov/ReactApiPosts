@@ -31,20 +31,19 @@ const App = () => {
     const [model, setModel] = useState(false)
     const [totalPages, setTotalPages] = useState(0)
     const [limit, setLimit] = useState(10)
-    const [page, setage] = useState(1)
+    const [page, setPage] = useState(1)
     const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query)
     const [pagesArray] = usePagination(totalPages)
-    console.log(pagesArray, 'B')
     const [fetchPosts, isPostsLoading, postError] = useFetching(async () => {
         const response = await PostService.getAll(limit, page);
         setPosts(response.data)
         const totalCount = response.headers['x-total-count']
         setTotalPages(getPageCount(totalCount, limit))
     })
-    
+
     useEffect(() => {
         fetchPosts()
-    }, [])
+    }, [page])
 
     const createPost = (newPost) => {
         setPosts([...posts, newPost])
@@ -54,6 +53,10 @@ const App = () => {
 
     const removePost = (post) => {
         setPosts(posts.filter(p => p.id !== post.id))
+    }
+
+    const changePage = (page) => {
+        setPage(page)
     }
 
     return (
@@ -75,6 +78,17 @@ const App = () => {
                     <Loader/>
                 </div> :
                 <PostList remove={removePost} posts={sortedAndSearchedPosts} title={"Посты про JS"}/>}
+            <div className="page__wrapper">
+                {pagesArray.map((p, index) =>
+                    <span
+                        className={page === p ? 'page page__current' : 'page'}
+                        key={p}
+                        onClick={() => setPage(p)}
+                    >
+                        {p}
+                    </span>)}
+            </div>
+
         </div>
     )
 }
