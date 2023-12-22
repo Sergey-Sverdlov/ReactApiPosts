@@ -19,23 +19,20 @@ import getPageCount from "./components/utils/pages";
 import pages from "./components/utils/pages";
 import {usePagination} from "./hooks/usePagination";
 import Pagination from "./components/pagination/Pagination";
-import {BrowserRouter, Routes, Route, Link} from 'react-router-dom';
+import {BrowserRouter, Routes, Route, Link, Switch, Redirect} from 'react-router-dom';
 import About from "./pages/About";
 import Posts from "./pages/Post";
+import Navbar from "./components/Navbar/Navbar";
 
 function App() {
     return (
         <BrowserRouter>
-            <div className="navbar">
-                <div className="navbar__links">
-                    <Link href="/about">О сайте</Link>
-                    <Link href="/posts">Посты</Link>
-                </div>
-            </div>
-            <Routes>
-                <Route path="/about" element = {<About />} />
-                <Route path="/posts" element = {<Posts />} />
-            </Routes>
+            <Navbar />
+                <Routes>
+                    <Route path="/about" element = {<About />} />
+                    <Route path="/posts" element = {<Posts />} />
+                    <Route path ="*" element={<Posts />} />
+                </Routes>
         </BrowserRouter>
     )
 }
