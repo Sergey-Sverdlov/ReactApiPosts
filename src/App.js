@@ -23,6 +23,7 @@ import {BrowserRouter, Routes, Route, Link, Switch, Redirect} from 'react-router
 import About from "./pages/About";
 import Posts from "./pages/Post";
 import Navbar from "./components/Navbar/Navbar";
+import Error from "./pages/Error";
 
 function App() {
     return (
@@ -31,7 +32,7 @@ function App() {
                 <Routes>
                     <Route path="/about" element = {<About />} />
                     <Route path="/posts" element = {<Posts />} />
-                    <Route path ="*" element={<Posts />} />
+                    <Route path ="*" element={<Error />} />
                 </Routes>
         </BrowserRouter>
     )
