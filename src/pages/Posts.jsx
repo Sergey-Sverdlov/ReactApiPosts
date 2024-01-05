@@ -12,6 +12,7 @@ import Loader from "../components/Loader/Loader";
 import PostList from "../components/PostList";
 import Pagination from "../components/pagination/Pagination";
 import {useObserver} from "../hooks/useObserver";
+import MySelect from "../components/UI/Select/MySelect";
 
 
 const Posts = () => {
@@ -40,7 +41,7 @@ const Posts = () => {
         () => setPage(page + 1))
     useEffect(() => {
         fetchPosts()
-    }, [page])
+    }, [page, limit])
 
     const createPost = (newPost) => {
         setPosts([...posts, newPost])
@@ -68,13 +69,24 @@ const Posts = () => {
             </MyModel>
             <hr style={{margin: "15px"}}/>
             <PostFilter filter={filter} setFilter={setFilter}/>
+            <MySelect
+                value={limit}
+                onChange={value => setLimit(value)}
+                defaultValue={"Количество элементов на странице"}
+                options={[
+                    {value: 5, name: '5'},
+                    {value: 10, name: '10'},
+                    {value: 25, name: '25'},
+                    {value: -1, name: 'Показать все посты'}
+                ]}
+            />
             {postError && <h1>Произошла ошибка {postError} </h1>}
             {isPostsLoading &&
             <div style={{display: "flex", justifyContent: 'center', marginTop: '50px', alignItems: 'center'}}>
                 <Loader/>
             </div>
             }
-            <PostList remove={removePost} posts={sortedAndSearchedPosts} title={"Посты про JS"}/>}
+            <PostList remove={removePost} posts={sortedAndSearchedPosts} title={"Посты про JS"}/>
             <div ref={lastElement} style={{height: 20, backgroundColor: 'red'}}/>
             <Pagination page={page} changePage={changePage} totalPages={totalPages}/>
         </div>
