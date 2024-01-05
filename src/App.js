@@ -21,19 +21,16 @@ import {usePagination} from "./hooks/usePagination";
 import Pagination from "./components/pagination/Pagination";
 import {BrowserRouter, Routes, Route, Link, Switch, Redirect} from 'react-router-dom';
 import About from "./pages/About";
-import Posts from "./pages/Post";
+import Posts from "./pages/Posts";
 import Navbar from "./components/Navbar/Navbar";
 import Error from "./pages/Error";
+import AppRouter from "./components/AppRouter";
 
 function App() {
     return (
         <BrowserRouter>
             <Navbar />
-                <Routes>
-                    <Route path="/about" element = {<About />} />
-                    <Route path="/posts" element = {<Posts />} />
-                    <Route path ="*" element={<Error />} />
-                </Routes>
+            <AppRouter />
         </BrowserRouter>
     )
 }
