@@ -1,7 +1,7 @@
 # Просмотр постов
 
 # Доступен по адресу
-https://65fb6b35f29d693b05a90693--superlative-froyo-4aa7be.netlify.app/posts
+https://65fb6b35f29d693b05a90693--superlative-froyo-4aa7be.netlify.app
 
 
 # Getting Started with Create React App
