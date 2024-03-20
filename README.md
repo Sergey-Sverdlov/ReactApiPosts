@@ -1,3 +1,9 @@
+# Просмотр постов
+
+# Доступен по адресу
+https://65fb6b35f29d693b05a90693--superlative-froyo-4aa7be.netlify.app/posts
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
